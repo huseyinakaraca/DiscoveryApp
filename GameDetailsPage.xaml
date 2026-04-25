@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiscoveryApp.GameDetailsPage"
+             Title="Oyun Detayları"
+             BackgroundColor="#121212">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20" VerticalOptions="Center">
+            <Image Source="{Binding ImageUrl}" 
+                   HeightRequest="450" 
+                   WidthRequest="800"
+                   Aspect="AspectFill" 
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20"/>
+            <Label Text="{Binding Name}" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" />
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <Label Text="{Binding Rating, StringFormat='⭐ {0}'}" FontSize="18" TextColor="#FFD700" />
+                <Label Text="{Binding ReleasedDate, StringFormat='📅 {0}'}" FontSize="18" TextColor="#AAAAAA" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding Description}" 
+                   FontSize="16" 
+                   TextColor="#DDDDDD" 
+                   Margin="20, 10" 
+                   LineBreakMode="WordWrap" />
+            <Button Text="⬅ Ana Sayfaya Dön" 
+                    Clicked="OnBackButtonClicked"
+                    BackgroundColor="#333333" 
+                    TextColor="White" 
+                    CornerRadius="10" 
+                    WidthRequest="250" 
+                    HorizontalOptions="Center" 
+                    Margin="0, 40, 0, 0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

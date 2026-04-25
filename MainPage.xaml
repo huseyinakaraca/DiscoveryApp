@@ -1,18 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DiscoveryApp.MainPage">
-    <VerticalStackLayout
-        Spacing="25"
-        Padding="30,0"
-        VerticalOptions="Center">
-        <Label
-            Text="Welcome to Discovery App!"
-            FontSize="32"
-            HorizontalOptions="Center" />
-        <Label
-            Text="API verileri yakında burada olacak..."
-            FontSize="18"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="DiscoveryApp.MainPage"
+             Title="Popüler Oyunlar"
+             BackgroundColor="#121212">
+    <Grid Padding="15">
+        <CollectionView ItemsSource="{Binding .}" 
+                        SelectionMode="Single" 
+                        SelectionChanged="OnGameSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,0,0,15" Padding="0" CornerRadius="12" BorderColor="Transparent" BackgroundColor="#1E1E1E">
+                        <Grid ColumnDefinitions="120, *" HeightRequest="120">
+                            <Image Grid.Column="0" Source="{Binding ImageUrl}" Aspect="AspectFill" />
+                            <VerticalStackLayout Grid.Column="1" Padding="15" Spacing="8" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="White" MaxLines="1" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding ReleasedDate, StringFormat='Çıkış: {0}'}" FontSize="14" TextColor="#AAAAAA" />
+                                <Label Text="{Binding Rating, StringFormat='⭐ {0}'}" FontSize="14" FontAttributes="Bold" TextColor="#FFD700" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>  
 </ContentPage>

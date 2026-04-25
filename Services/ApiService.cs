@@ -25,4 +25,20 @@ public class ApiService
             return new List<Game>();
         }
     }
+    public async Task<Game?> GetGameDetailsAsync(int gameId)
+    {
+        https://api.rawg.io/api/games/12345?key=ANAHTAR
+        string url = $"{BaseUrl}/{gameId}?key={ApiKey}";
+        try
+        {
+            string responseJson = await _httpClient.GetStringAsync(url);
+            var gameData = JsonSerializer.Deserialize<Game>(responseJson);
+            return gameData;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Detay çekilirken hata oluştu: {ex.Message}");
+            return null;
+        }
+    }
 }
