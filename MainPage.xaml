@@ -4,10 +4,18 @@
              x:Class="DiscoveryApp.MainPage"
              Title="Popüler Oyunlar"
              BackgroundColor="#121212">
-    <Grid Padding="15">
-        <CollectionView ItemsSource="{Binding .}" 
-                        SelectionMode="Single" 
-                        SelectionChanged="OnGameSelected">
+    <Grid Padding="15" RowDefinitions="Auto, *">
+        <SearchBar Grid.Row="0" 
+                   Placeholder="Oyun ara... (Örn: Cyberpunk)" 
+                   TextChanged="OnSearchTextChanged"
+                   BackgroundColor="#1E1E1E"
+                   TextColor="White"
+                   CancelButtonColor="White"
+                   Margin="0,0,0,15" />
+        <CollectionView Grid.Row="1" 
+                     ItemsSource="{Binding .}" 
+                     SelectionMode="Single" 
+                     SelectionChanged="OnGameSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="0,0,0,15" Padding="0" CornerRadius="12" BorderColor="Transparent" BackgroundColor="#1E1E1E">

@@ -25,6 +25,22 @@ public class ApiService
             return new List<Game>();
         }
     }
+    public async Task<List<Game>> SearchGamesAsync(string searchText)
+    {
+        string url = $"{BaseUrl}?search={searchText}&key={ApiKey}";
+
+        try
+        {
+            string responseJson = await _httpClient.GetStringAsync(url);
+            var data = JsonSerializer.Deserialize<GameResponse>(responseJson);
+            return data?.Games ?? new List<Game>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Arama yapılırken hata: {ex.Message}");
+            return new List<Game>();
+        }
+    }
     public async Task<Game?> GetGameDetailsAsync(int gameId)
     {
         https://api.rawg.io/api/games/12345?key=ANAHTAR

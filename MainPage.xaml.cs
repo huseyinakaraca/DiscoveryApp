@@ -22,4 +22,16 @@ public partial class MainPage : ContentPage
         await Navigation.PushAsync(new GameDetailsPage(selectedGame));
         ((CollectionView)sender).SelectedItem = null;
     }
+    private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        string keyword = e.NewTextValue;
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            var popularGames = await _apiService.GetPopularGamesAsync();
+            this.BindingContext = popularGames;
+            return; 
+        }
+        var searchedGames = await _apiService.SearchGamesAsync(keyword);
+        this.BindingContext = searchedGames;
+    }
 }

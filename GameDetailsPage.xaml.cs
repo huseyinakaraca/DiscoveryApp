@@ -4,7 +4,7 @@ namespace DiscoveryApp;
 public partial class GameDetailsPage : ContentPage
 {
     private readonly ApiService _apiService;
-    private Game _currentGame;
+    private readonly Game _currentGame;
     public GameDetailsPage(Game selectedGame)
     {
         InitializeComponent();
@@ -22,6 +22,12 @@ public partial class GameDetailsPage : ContentPage
             this.BindingContext = null;
             this.BindingContext = _currentGame;
         }
+    }
+    private async void OnFavoriteButtonClicked(object sender, EventArgs e)
+    {
+        var dbService = new DatabaseService();
+        await dbService.SaveFavoriteAsync(_currentGame);
+        await DisplayAlert("Harika!", $"{_currentGame.Name} baþarýyla favorilerine eklendi.", "Tamam");
     }
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {

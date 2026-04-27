@@ -1,8 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using SQLite;
 namespace DiscoveryApp.Models
 {
     public class Game
     {
+        [PrimaryKey]
         [JsonPropertyName("id")]
         public int Id { get; set; }
         [JsonPropertyName("name")]
