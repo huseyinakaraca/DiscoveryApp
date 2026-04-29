@@ -4,32 +4,72 @@
              x:Class="DiscoveryApp.MainPage"
              Title="Popüler Oyunlar"
              BackgroundColor="#121212">
+    <ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
+            <Label Grid.Column="0"
+               Text="Popüler Oyunlar"
+               TextColor="White"
+               FontSize="36"
+               FontAttributes="Bold"
+               VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                Text="Çıkış Yap"
+                Clicked="OnLogoutClicked"
+                BackgroundColor="#E53935"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="20"
+                CornerRadius="10"
+                HeightRequest="0"
+                Padding="15,0"
+                VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
     <Grid Padding="15" RowDefinitions="Auto, *">
-        <SearchBar Grid.Row="0" 
-                   Placeholder="Oyun ara... (Örn: Cyberpunk)" 
+        <SearchBar Grid.Row="0"
+                   Placeholder="Oyun ara... (Örn: Cyberpunk)"
                    TextChanged="OnSearchTextChanged"
                    BackgroundColor="#1E1E1E"
                    TextColor="White"
                    CancelButtonColor="White"
-                   Margin="0,0,0,15" />
-        <CollectionView Grid.Row="1" 
-                     ItemsSource="{Binding .}" 
-                     SelectionMode="Single" 
-                     SelectionChanged="OnGameSelected">
+                   Margin="0,0,0,5" />
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding .}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnGameSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,0,0,15" Padding="0" CornerRadius="12" BorderColor="Transparent" BackgroundColor="#1E1E1E">
-                        <Grid ColumnDefinitions="120, *" HeightRequest="120">
-                            <Image Grid.Column="0" Source="{Binding ImageUrl}" Aspect="AspectFill" />
-                            <VerticalStackLayout Grid.Column="1" Padding="15" Spacing="8" VerticalOptions="Center">
-                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="White" MaxLines="1" LineBreakMode="TailTruncation" />
-                                <Label Text="{Binding ReleasedDate, StringFormat='Çıkış: {0}'}" FontSize="14" TextColor="#AAAAAA" />
-                                <Label Text="{Binding Rating, StringFormat='⭐ {0}'}" FontSize="14" FontAttributes="Bold" TextColor="#FFD700" />
+                    <Frame Margin="0,0,0,15" Padding="0" 
+                           CornerRadius="12" 
+                           BorderColor="Transparent" 
+                           BackgroundColor="#1E1E1E">
+                        <Grid ColumnDefinitions="120, *"
+                              HeightRequest="120">
+                            <Image Grid.Column="0" 
+                                   Source="{Binding ImageUrl}" 
+                                   Aspect="AspectFill" />
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 Padding="15" Spacing="8" 
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="White" 
+                                       MaxLines="1" 
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding ReleasedDate, StringFormat='Çıkış: {0}'}"
+                                       FontSize="14" 
+                                       TextColor="#AAAAAA" />
+                                <Label Text="{Binding Rating, StringFormat='★ {0}'}"
+                                       FontSize="14"
+                                       FontAttributes="Bold" 
+                                       TextColor="#FFD700" />
                             </VerticalStackLayout>
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </Grid>  
+    </Grid>
 </ContentPage>

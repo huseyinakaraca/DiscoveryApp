@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiscoveryApp.FavoritesPage"
+             Title="Favori Oyunlarım"
+             BackgroundColor="#121212">
+    <Grid Padding="15">
+        <Label x:Name="EmptyLabel"
+               Text="Henüz hiç favori oyunun yok. 😔"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="False" />
+        <CollectionView x:Name="FavoritesCollectionView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Margin="0,0,0,15" Padding="10" BorderColor="Transparent">
+                        <Grid ColumnDefinitions="100, *, Auto">
+                            <Image Grid.Column="0" 
+                       Source="{Binding ImageUrl}" 
+                       HeightRequest="100" 
+                       WidthRequest="100" 
+                       Aspect="AspectFill" />
+                            <Label Grid.Column="1" 
+                       Text="{Binding Name}" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       VerticalOptions="Center" 
+                       Margin="15,0,0,0" />
+                            <Button Grid.Column="2" 
+                        Text="🗑️ Sil" 
+                        BackgroundColor="#E50914" 
+                        TextColor="White" 
+                        FontAttributes="Bold"
+                        VerticalOptions="Center" 
+                        Margin="0,0,10,0"
+                        CommandParameter="{Binding .}" 
+                        Clicked="OnDeleteClicked" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

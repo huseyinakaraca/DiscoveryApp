@@ -34,4 +34,12 @@ public partial class MainPage : ContentPage
         var searchedGames = await _apiService.SearchGamesAsync(keyword);
         this.BindingContext = searchedGames;
     }
+    private async void OnLogoutClicked(object sender, EventArgs e)
+    {
+        bool confirm = await DisplayAlert("Çıkış", "Çıkmak istediğinize emin misiniz?", "Evet", "Hayır");
+        if (confirm)
+        {
+            Application.Current.Quit();
+        }
+    }
 }

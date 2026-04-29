@@ -5,7 +5,6 @@ public class DatabaseService
 {
     private SQLiteAsyncConnection _db;
     private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, "MyGames.db3");
-
     public DatabaseService()
     {
         _db = new SQLiteAsyncConnection(_dbPath);
