@@ -42,4 +42,21 @@ public partial class MainPage : ContentPage
             Application.Current.Quit();
         }
     }
+    private async void OnGenreChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+        int? genreId = null;
+        switch (selectedIndex)
+        {
+            case 1: genreId = 4; break; 
+            case 2: genreId = 3; break; 
+            case 3: genreId = 5; break;  
+            case 4: genreId = 10; break;       
+            case 5: genreId = 15; break; 
+            default: genreId = null; break;
+        }
+        var games = await _apiService.GetPopularGamesAsync(genreId);
+        this.BindingContext = games;
+    }
 }

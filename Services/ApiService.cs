@@ -10,9 +10,13 @@ public class ApiService
     {
         _httpClient = new HttpClient();
     }
-    public async Task<List<Game>> GetPopularGamesAsync()
+    public async Task<List<Game>> GetPopularGamesAsync(int? genreId = null)
     {
         string url = $"{BaseUrl}?key={ApiKey}";
+        if (genreId.HasValue)
+        {
+            url += $"&genres={genreId.Value}";
+        }
         try
         {
             string responseJson = await _httpClient.GetStringAsync(url);
