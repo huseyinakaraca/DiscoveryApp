@@ -43,7 +43,6 @@ public class ApiService
     }
     public async Task<Game?> GetGameDetailsAsync(int gameId)
     {
-        https://api.rawg.io/api/games/12345?key=ANAHTAR
         string url = $"{BaseUrl}/{gameId}?key={ApiKey}";
         try
         {
@@ -54,6 +53,26 @@ public class ApiService
         catch (Exception ex)
         {
             Console.WriteLine($"Detay çekilirken hata oluştu: {ex.Message}");
+            return null;
+        }
+    }
+    public async Task<string?> GetGameTrailerAsync(int gameId)
+    {
+        string url = $"{BaseUrl}/{gameId}/movies?key={ApiKey}";
+        try
+        {
+            string responseJson = await _httpClient.GetStringAsync(url);
+            using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(responseJson);
+            var results = doc.RootElement.GetProperty("results");
+            if (results.GetArrayLength() > 0)
+            {
+                return results[0].GetProperty("data").GetProperty("max").GetString();
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fragman çekilirken hata oluştu: {ex.Message}");
             return null;
         }
     }
