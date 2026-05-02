@@ -32,7 +32,6 @@ public class ApiService
     public async Task<List<Game>> SearchGamesAsync(string searchText)
     {
         string url = $"{BaseUrl}?search={searchText}&key={ApiKey}";
-
         try
         {
             string responseJson = await _httpClient.GetStringAsync(url);

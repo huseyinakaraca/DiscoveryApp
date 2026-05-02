@@ -1,12 +1,13 @@
 using DiscoveryApp.Models;
 using DiscoveryApp.Services;
-using System.Text.Json; 
+using System.Text.Json;
 namespace DiscoveryApp;
 public partial class GameDetailsPage : ContentPage
 {
     private readonly ApiService _apiService;
     private readonly Game _currentGame;
     private string _originalDescription;
+    public bool IsBusy { get; set; }
     public GameDetailsPage(Game selectedGame)
     {
         InitializeComponent();
@@ -17,7 +18,12 @@ public partial class GameDetailsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        IsBusy = true;
+        this.BindingContext = null;
+        this.BindingContext = this; 
+
         var fullDetails = await _apiService.GetGameDetailsAsync(_currentGame.Id);
+
         if (fullDetails != null)
         {
             string temizMetin = fullDetails.Description;
@@ -28,56 +34,67 @@ public partial class GameDetailsPage : ContentPage
             _originalDescription = temizMetin;
             _currentGame.Description = _originalDescription;
             LanguagePicker.SelectedIndex = 0;
-
-            this.BindingContext = null;
-            this.BindingContext = _currentGame;
         }
+        IsBusy = false;
+        this.BindingContext = null;
+        this.BindingContext = _currentGame;
     }
     private async void OnLanguageChanged(object sender, EventArgs e)
     {
         if (string.IsNullOrEmpty(_originalDescription)) return;
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
+        if (selectedIndex == 0) 
+        {
+            _currentGame.Description = _originalDescription;
+            this.BindingContext = null;
+            this.BindingContext = _currentGame;
+            return;
+        }
+        IsBusy = true;
+        this.BindingContext = null;
+        this.BindingContext = this;
         string targetLang = "en";
         if (selectedIndex == 1) targetLang = "tr";
         else if (selectedIndex == 2) targetLang = "es";
         else if (selectedIndex == 3) targetLang = "de";
         else if (selectedIndex == 4) targetLang = "fr";
-        if (targetLang != "en")
+        try
         {
-            try
+            string textToTranslate = _originalDescription;
+            int maxKapasite = 400;
+            System.Text.StringBuilder tamCeviri = new System.Text.StringBuilder();
+
+            for (int i = 0; i < textToTranslate.Length; i += maxKapasite)
             {
-                string textToTranslate = _originalDescription;
-                int maxKapasite = 400;
-                System.Text.StringBuilder tamCeviri = new System.Text.StringBuilder();
-                for (int i = 0; i < textToTranslate.Length; i += maxKapasite)
+                int parcaUzunlugu = Math.Min(maxKapasite, textToTranslate.Length - i);
+                string parca = textToTranslate.Substring(i, parcaUzunlugu);
+
+                string url = $"https://api.mymemory.translated.net/get?q={Uri.EscapeDataString(parca)}&langpair=en|{targetLang}&de=isubu@ogrenci.com";
+
+                using var client = new HttpClient();
+                var response = await client.GetStringAsync(url);
+
+                using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(response);
+                if (doc.RootElement.GetProperty("responseStatus").GetInt32() == 200)
                 {
-                    int parcaUzunlugu = Math.Min(maxKapasite, textToTranslate.Length - i);
-                    string parca = textToTranslate.Substring(i, parcaUzunlugu);
-                    string url = $"https://api.mymemory.translated.net/get?q={Uri.EscapeDataString(parca)}&langpair=en|{targetLang}&de=isubu@ogrenci.com";
-                    using var client = new HttpClient();
-                    var response = await client.GetStringAsync(url);
-                    using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(response);
-                    if (doc.RootElement.GetProperty("responseStatus").GetInt32() == 200)
-                    {
-                        var ceviriParcasi = doc.RootElement.GetProperty("responseData").GetProperty("translatedText").GetString();
-                        tamCeviri.Append(ceviriParcasi + " ");
-                    }
-                    await Task.Delay(500);
+                    var ceviriParcasi = doc.RootElement.GetProperty("responseData").GetProperty("translatedText").GetString();
+                    tamCeviri.Append(ceviriParcasi + " ");
                 }
-                _currentGame.Description = tamCeviri.ToString();
+                await Task.Delay(500);
             }
-            catch (Exception ex) 
-            {
-                await DisplayAlert("Sistem Hatasý", $"Çeviri baþarýsýz. Detay: {ex.Message}", "Tamam");
-            }
+            _currentGame.Description = tamCeviri.ToString();
         }
-        else
+        catch (Exception ex)
         {
-            _currentGame.Description = _originalDescription;
+            await DisplayAlert("Sistem Hatasý", $"Çeviri baþarýsýz. Detay: {ex.Message}", "Tamam");
         }
-        this.BindingContext = null;
-        this.BindingContext = _currentGame;
+        finally
+        {
+            IsBusy = false;
+            this.BindingContext = null;
+            this.BindingContext = _currentGame;
+        }
     }
     private async void OnFavoriteButtonClicked(object sender, EventArgs e)
     {
