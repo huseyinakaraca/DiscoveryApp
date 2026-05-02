@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiscoveryApp.PopularGamesPage"
+             Title="Haftanın Trendleri 🔥"
+             BackgroundColor="#121212">
+    <Grid RowDefinitions="Auto,*">
+        <Label Text="En Yüksek Puanlı Oyunlar" 
+       FontSize="24" FontAttributes="Bold" 
+       TextColor="White" Margin="20,10" />
+        <CollectionView Grid.Row="1" x:Name="PopularGamesList"
+                        SelectionMode="Single"
+                        SelectionChanged="OnGameSelected">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" 
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#1E1E1E"
+                           Margin="10,5" 
+                           Padding="0"
+                           CornerRadius="10">
+                        <HorizontalStackLayout Spacing="15">
+                            <Image Source="{Binding ImageUrl}" 
+                                   WidthRequest="120"
+                                   HeightRequest="120" 
+                                   Aspect="AspectFill" />
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding Name}" 
+                                       TextColor="White"
+                                       FontSize="18" 
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Rating, StringFormat='⭐ {0}'}"
+                                       TextColor="#FFD700" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

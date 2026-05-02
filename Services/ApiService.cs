@@ -79,4 +79,20 @@ public class ApiService
             return null;
         }
     }
+    public async Task<List<Game>> GetTopRatedGamesAsync()
+    {
+        string url = $"{BaseUrl}?key={ApiKey}&ordering=-rating&page_size=20";
+
+        try
+        {
+            string responseJson = await _httpClient.GetStringAsync(url);
+            var data = JsonSerializer.Deserialize<GameResponse>(responseJson);
+            return data?.Games ?? new List<Game>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Puanlı oyunlar çekilirken hata: {ex.Message}");
+            return new List<Game>();
+        }
+    }
 }
