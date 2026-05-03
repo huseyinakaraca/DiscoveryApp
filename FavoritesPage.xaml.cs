@@ -1,4 +1,5 @@
 using DiscoveryApp.Services;
+using DiscoveryApp.Models;
 namespace DiscoveryApp;
 public partial class FavoritesPage : ContentPage
 {
@@ -30,5 +31,12 @@ public partial class FavoritesPage : ContentPage
         var dbService = new DatabaseService();
         await dbService.DeleteFavoriteAsync(gameToDelete);
         OnAppearing();
+    }
+    private async void OnFavoriteGameSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is not Game selectedGame)
+            return;
+        await Navigation.PushAsync(new GameDetailsPage(selectedGame));
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

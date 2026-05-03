@@ -10,9 +10,9 @@ public class ApiService
     {
         _httpClient = new HttpClient();
     }
-    public async Task<List<Game>> GetPopularGamesAsync(int? genreId = null, string ordering = null)
+    public async Task<List<Game>> GetPopularGamesAsync(int? genreId = null, string ordering = null, int page = 1)
     {
-        string url = $"{BaseUrl}?key={ApiKey}";
+        string url = $"{BaseUrl}?key={ApiKey}&page={page}"; 
         if (genreId.HasValue) url += $"&genres={genreId.Value}";
         if (!string.IsNullOrEmpty(ordering)) url += $"&ordering={ordering}";
         try

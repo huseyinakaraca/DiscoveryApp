@@ -1,35 +1,51 @@
 ﻿using DiscoveryApp.Services;
 using DiscoveryApp.Models;
+using System.Collections.ObjectModel;
 namespace DiscoveryApp;
 public partial class MainPage : ContentPage
 {
     private readonly ApiService _apiService;
     private bool _isBusy;
     private string currentSort = "";
-    private int? currentGenreId = null; 
+    private int? currentGenreId = null;
+    private int _currentPage = 1;
+    private bool _isLoadingMore = false;
+    private ObservableCollection<Game> _gamesCollection = new ObservableCollection<Game>();
     public MainPage()
     {
         InitializeComponent();
         _apiService = new ApiService();
+        PopularGamesList.ItemsSource = _gamesCollection;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         await LoadData();
     }
-    private async Task LoadData(int? genreId = null, string search = null)
+    private async Task LoadData(int? genreId = null, string search = null, bool isLoadMore = false)
     {
         if (_isBusy) return;
         _isBusy = true;
         try
         {
+            if (!isLoadMore)
+            {
+                _currentPage = 1;
+                _gamesCollection.Clear();
+            }
             List<Game> games;
             if (!string.IsNullOrWhiteSpace(search))
+            {
                 games = await _apiService.SearchGamesAsync(search);
+            }
             else
-                games = await _apiService.GetPopularGamesAsync(genreId, currentSort);
-
-            this.BindingContext = games;
+            {
+                games = await _apiService.GetPopularGamesAsync(genreId, currentSort, _currentPage);
+            }
+            foreach (var game in games)
+            {
+                _gamesCollection.Add(game);
+            }
         }
         catch (Exception)
         {
@@ -38,6 +54,7 @@ public partial class MainPage : ContentPage
         finally
         {
             _isBusy = false;
+            _isLoadingMore = false;
         }
     }
     private async void OnGameSelected(object sender, SelectionChangedEventArgs e)
@@ -49,8 +66,7 @@ public partial class MainPage : ContentPage
     }
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        string keyword = e.NewTextValue;
-        await LoadData(search: keyword);
+        await LoadData(search: e.NewTextValue, isLoadMore: false);
     }
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
@@ -91,5 +107,13 @@ public partial class MainPage : ContentPage
             };
             await LoadData(genreId: currentGenreId);
         }
+    }
+    private async void OnScrolledToBottom(object sender, EventArgs e)
+    {
+        if (_isLoadingMore || _isBusy)
+            return;
+        _isLoadingMore = true;
+        _currentPage++;
+        await LoadData(genreId: currentGenreId, isLoadMore: true);
     }
 }

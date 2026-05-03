@@ -11,7 +11,7 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"
                IsVisible="False" />
-        <CollectionView x:Name="FavoritesCollectionView" SelectionMode="None">
+        <CollectionView x:Name="FavoritesCollectionView" SelectionMode="Single" SelectionChanged="OnFavoriteGameSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="#1E1E1E" CornerRadius="10" Margin="0,0,0,15" Padding="10" BorderColor="Transparent">

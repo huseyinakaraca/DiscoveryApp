@@ -7,7 +7,8 @@
     <ContentPage.ToolbarItems>
     </ContentPage.ToolbarItems>
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
+        <Grid ColumnDefinitions="*, Auto" 
+              Padding="0,0,10,0">
             <Label Grid.Column="0"
                Text="Popüler Oyunlar"
                TextColor="White"
@@ -27,7 +28,8 @@
                 VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
-    <Grid Padding="15" RowDefinitions="Auto, Auto, *">
+    <Grid Padding="15"
+          RowDefinitions="Auto, Auto, *">
         <SearchBar Grid.Row="0"
                    Placeholder="Oyun ara... (Örn: Cyberpunk)"
                    TextChanged="OnSearchTextChanged"
@@ -35,12 +37,19 @@
                    TextColor="White"
                    CancelButtonColor="White"
                    Margin="0,0,0,5" />
-        <Frame Grid.Row="1" BackgroundColor="#1E1E1E" Margin="0,0,0,10" Padding="5" CornerRadius="10">
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,0,0,10">
-                <Frame Grid.Column="0" Padding="5">
+        <Frame Grid.Row="1"
+               BackgroundColor="#1E1E1E"
+               Margin="0,0,0,10" 
+               Padding="5"
+               CornerRadius="10">
+            <Grid ColumnDefinitions="*, *"
+                  ColumnSpacing="10"
+                  Margin="0,0,0,10">
+                <Frame Grid.Column="0" 
+                       Padding="5">
                     <Picker x:Name="CategoryPicker" 
-                Title="Kategori Seçin"
-                SelectedIndexChanged="OnCategoryChanged">
+                            Title="Kategori Seçin"
+                            SelectedIndexChanged="OnCategoryChanged">
                         <Picker.Items>
                             <x:String>Hepsi</x:String>
                             <x:String>Aksiyon</x:String>
@@ -53,21 +62,22 @@
                 </Frame>
                 <Frame Grid.Column="1" Padding="5">
                     <Picker x:Name="SortPicker" 
-                                Title="Sıralama"
-                                SelectedIndexChanged="OnSortChanged">
+                            Title="Sıralama"
+                            SelectedIndexChanged="OnSortChanged">
                         <Picker.Items>
-                                <x:String>İsim (A-Z)</x:String>
-                                <x:String>Yeni (Çıkış Tarihi)</x:String>
+                            <x:String>İsim (A-Z)</x:String>
+                            <x:String>Yeni (Çıkış Tarihi)</x:String>
                         </Picker.Items>
-                        </Picker>
+                    </Picker>
                 </Frame>
             </Grid>
-
         </Frame>
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding .}"
+        <CollectionView x:Name="PopularGamesList"
+                        Grid.Row="2"
                         SelectionMode="Single"
-                        SelectionChanged="OnGameSelected">
+                        SelectionChanged="OnGameSelected"
+                        RemainingItemsThreshold="2" 
+                        RemainingItemsThresholdReached="OnScrolledToBottom">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="0,0,0,15" Padding="0" 
@@ -82,7 +92,8 @@
                             <VerticalStackLayout Grid.Column="1" 
                                                  Padding="15" Spacing="8" 
                                                  VerticalOptions="Center">
-                                <Label Text="{Binding Name}" FontSize="18" 
+                                <Label Text="{Binding Name}"
+                                       FontSize="18" 
                                        FontAttributes="Bold" 
                                        TextColor="White" 
                                        MaxLines="1" 
