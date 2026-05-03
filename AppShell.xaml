@@ -14,7 +14,7 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
         <ShellContent
-            Title="Popüler"
+            Title="En İyiler"
             ContentTemplate="{DataTemplate local:PopularGamesPage}"
             Route="PopularGamesPage" />
         <ShellContent

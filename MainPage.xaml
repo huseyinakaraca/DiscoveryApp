@@ -36,20 +36,33 @@
                    CancelButtonColor="White"
                    Margin="0,0,0,5" />
         <Frame Grid.Row="1" BackgroundColor="#1E1E1E" Margin="0,0,0,10" Padding="5" CornerRadius="10">
-            <Picker x:Name="GenrePicker" 
-                    Title="Kategori Seçin" 
-                    TitleColor="Gray"
-                    TextColor="White"
-                    SelectedIndexChanged="OnGenreChanged">
-                <Picker.Items>
-                    <x:String>Hepsi</x:String>
-                    <x:String>Aksiyon</x:String>
-                    <x:String>Macera</x:String>
-                    <x:String>RPG (Rol Yapma)</x:String>
-                    <x:String>Strateji</x:String>
-                    <x:String>Spor</x:String>
-                </Picker.Items>
-            </Picker>
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,0,0,10">
+                <Frame Grid.Column="0" Padding="5">
+                    <Picker x:Name="CategoryPicker" 
+                Title="Kategori Seçin"
+                SelectedIndexChanged="OnCategoryChanged">
+                        <Picker.Items>
+                            <x:String>Hepsi</x:String>
+                            <x:String>Aksiyon</x:String>
+                            <x:String>Macera</x:String>
+                            <x:String>RPG</x:String>
+                            <x:String>Strateji</x:String>
+                            <x:String>Spor</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
+                <Frame Grid.Column="1" Padding="5">
+                    <Picker x:Name="SortPicker" 
+                                Title="Sıralama"
+                                SelectedIndexChanged="OnSortChanged">
+                        <Picker.Items>
+                                <x:String>İsim (A-Z)</x:String>
+                                <x:String>Yeni (Çıkış Tarihi)</x:String>
+                        </Picker.Items>
+                        </Picker>
+                </Frame>
+            </Grid>
+
         </Frame>
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding .}"

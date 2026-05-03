@@ -5,6 +5,8 @@ public partial class MainPage : ContentPage
 {
     private readonly ApiService _apiService;
     private bool _isBusy;
+    private string currentSort = "";
+    private int? currentGenreId = null; 
     public MainPage()
     {
         InitializeComponent();
@@ -25,13 +27,13 @@ public partial class MainPage : ContentPage
             if (!string.IsNullOrWhiteSpace(search))
                 games = await _apiService.SearchGamesAsync(search);
             else
-                games = await _apiService.GetPopularGamesAsync(genreId);
+                games = await _apiService.GetPopularGamesAsync(genreId, currentSort);
 
             this.BindingContext = games;
         }
         catch (Exception)
         {
-            await DisplayAlert("Hata", "Oyunlar yüklenirken bir sorun oluştu. İnternetinizi kontrol edin.", "Tamam");
+            await DisplayAlert("Hata", "Oyunlar yüklenirken bir sorun oluştu.", "Tamam");
         }
         finally
         {
@@ -58,20 +60,36 @@ public partial class MainPage : ContentPage
             Application.Current.Quit();
         }
     }
-    private async void OnGenreChanged(object sender, EventArgs e)
+    private async void OnCategoryChanged(object sender, EventArgs e)
     {
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
         int? genreId = null;
         switch (selectedIndex)
         {
-            case 1: genreId = 4; break;  
-            case 2: genreId = 3; break;  
-            case 3: genreId = 5; break;  
+            case 1: genreId = 4; break;
+            case 2: genreId = 3; break;
+            case 3: genreId = 5; break;
             case 4: genreId = 10; break;
-            case 5: genreId = 15; break; 
+            case 5: genreId = 15; break;
             default: genreId = null; break;
         }
+        currentGenreId = genreId;
         await LoadData(genreId: genreId);
+    }
+    private async void OnSortChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+        if (selectedIndex != -1)
+        {
+            currentSort = selectedIndex switch
+            {
+                0 => "name",       
+                1 => "-released", 
+                _ => ""           
+            };
+            await LoadData(genreId: currentGenreId);
+        }
     }
 }

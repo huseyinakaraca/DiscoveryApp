@@ -10,24 +10,18 @@ public class ApiService
     {
         _httpClient = new HttpClient();
     }
-    public async Task<List<Game>> GetPopularGamesAsync(int? genreId = null)
+    public async Task<List<Game>> GetPopularGamesAsync(int? genreId = null, string ordering = null)
     {
         string url = $"{BaseUrl}?key={ApiKey}";
-        if (genreId.HasValue)
-        {
-            url += $"&genres={genreId.Value}";
-        }
+        if (genreId.HasValue) url += $"&genres={genreId.Value}";
+        if (!string.IsNullOrEmpty(ordering)) url += $"&ordering={ordering}";
         try
         {
             string responseJson = await _httpClient.GetStringAsync(url);
             var data = JsonSerializer.Deserialize<GameResponse>(responseJson);
             return data?.Games ?? new List<Game>();
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Hata oluştu: {ex.Message}");
-            return new List<Game>();
-        }
+        catch (Exception) { return new List<Game>(); }
     }
     public async Task<List<Game>> SearchGamesAsync(string searchText)
     {
