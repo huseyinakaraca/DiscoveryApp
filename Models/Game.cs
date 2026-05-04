@@ -18,4 +18,14 @@ namespace DiscoveryApp.Models
         [JsonPropertyName("description_raw")]
         public string? Description { get; set; }
     }
+    public class ScreenshotResponse
+    {
+        [System.Text.Json.Serialization.JsonPropertyName("results")]
+        public List<GameScreenshot> Results { get; set; }
+    }
+    public class GameScreenshot
+    {
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public string ImageUrl { get; set; }
+    }
 }                

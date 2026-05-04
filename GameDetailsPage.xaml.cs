@@ -34,6 +34,8 @@ public partial class GameDetailsPage : ContentPage
             _originalDescription = temizMetin;
             _currentGame.Description = _originalDescription;
             LanguagePicker.SelectedIndex = 0;
+            var screenshots = await _apiService.GetGameScreenshotsAsync(_currentGame.Id);
+            ScreenshotsList.ItemsSource = screenshots;
         }
         IsBusy = false;
         this.BindingContext = null;

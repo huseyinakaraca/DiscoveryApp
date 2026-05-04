@@ -89,4 +89,18 @@ public class ApiService
             return new List<Game>();
         }
     }
+    public async Task<List<GameScreenshot>> GetGameScreenshotsAsync(int gameId)
+    {
+        string url = $"{BaseUrl}/{gameId}/screenshots?key={ApiKey}";
+        try
+        {
+            string responseJson = await _httpClient.GetStringAsync(url);
+            var data = JsonSerializer.Deserialize<ScreenshotResponse>(responseJson);
+            return data?.Results ?? new List<GameScreenshot>();
+        }
+        catch
+        {
+            return new List<GameScreenshot>();
+        }
+    }
 }

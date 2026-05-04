@@ -73,11 +73,12 @@
             </Grid>
         </Frame>
         <CollectionView x:Name="PopularGamesList"
-                        Grid.Row="2"
-                        SelectionMode="Single"
-                        SelectionChanged="OnGameSelected"
-                        RemainingItemsThreshold="2" 
-                        RemainingItemsThresholdReached="OnScrolledToBottom">
+                Grid.Row="2"
+                SelectionMode="Single"
+                SelectionChanged="OnGameSelected"
+                RemainingItemsThreshold="2"
+                RemainingItemsThresholdReached="OnScrolledToBottom"
+                ItemsUpdatingScrollMode="KeepScrollOffset">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="0,0,0,15" Padding="0" 

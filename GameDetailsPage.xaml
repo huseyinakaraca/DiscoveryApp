@@ -61,6 +61,30 @@
                    TextColor="#DDDDDD"
                    Margin="20, 10"
                    LineBreakMode="WordWrap" />
+            <Label Text="Oyundan Kareler" 
+                    FontSize="20" 
+                    FontAttributes="Bold" 
+                    TextColor="White" 
+                    Margin="0,20,0,10" />
+            <CollectionView x:Name="ScreenshotsList"
+                            HeightRequest="200">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="12" Padding="0"
+                               IsClippedToBounds="True"
+                               BorderColor="Transparent">
+                            <Image Source="{Binding ImageUrl}" 
+                                   Aspect="AspectFill"
+                                   WidthRequest="320" 
+                                   HeightRequest="200" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button Text="⬅ Ana Sayfaya Dön" 
                     Clicked="OnBackButtonClicked" 
                     BackgroundColor="#333333"
