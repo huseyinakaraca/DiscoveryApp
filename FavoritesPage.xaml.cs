@@ -6,22 +6,31 @@ public partial class FavoritesPage : ContentPage
     public FavoritesPage()
     {
         InitializeComponent();
+        this.BindingContext = this;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        var dbService = new DatabaseService();
-        var favoriteGames = await dbService.GetFavoritesAsync();
-        if (favoriteGames == null || favoriteGames.Count == 0)
+        this.IsBusy = true;
+        try
         {
-            EmptyLabel.IsVisible = true;
-            FavoritesCollectionView.IsVisible = false;
+            var dbService = new DatabaseService();
+            var favoriteGames = await dbService.GetFavoritesAsync();
+            if (favoriteGames == null || favoriteGames.Count == 0)
+            {
+                EmptyLabel.IsVisible = true;
+                FavoritesCollectionView.IsVisible = false;
+            }
+            else
+            {
+                EmptyLabel.IsVisible = false;
+                FavoritesCollectionView.IsVisible = true;
+                FavoritesCollectionView.ItemsSource = favoriteGames;
+            }
         }
-        else
+        finally
         {
-            EmptyLabel.IsVisible = false;
-            FavoritesCollectionView.IsVisible = true;
-            FavoritesCollectionView.ItemsSource = favoriteGames;
+            this.IsBusy = false;
         }
     }
     private async void OnDeleteClicked(object sender, EventArgs e)

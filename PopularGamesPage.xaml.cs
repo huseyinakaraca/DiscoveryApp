@@ -7,13 +7,22 @@ public partial class PopularGamesPage : ContentPage
     public PopularGamesPage()
     {
         InitializeComponent();
+        this.BindingContext = this;
         _apiService = new ApiService();
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        var games = await _apiService.GetTopRatedGamesAsync();
-        PopularGamesList.ItemsSource = games;
+        this.IsBusy = true;
+        try
+        {
+            var games = await _apiService.GetTopRatedGamesAsync();
+            PopularGamesList.ItemsSource = games;
+        }
+        finally
+        {
+            this.IsBusy = false;
+        }
     }
     private async void OnGameSelected(object sender, SelectionChangedEventArgs e)
     {

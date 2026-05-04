@@ -39,5 +39,13 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                   IsVisible="{Binding IsBusy}" 
+                   Color="#E50914" 
+                   WidthRequest="60" 
+                   HeightRequest="60" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Grid.Row="1" />
     </Grid>
 </ContentPage>

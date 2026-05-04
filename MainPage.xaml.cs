@@ -5,7 +5,6 @@ namespace DiscoveryApp;
 public partial class MainPage : ContentPage
 {
     private readonly ApiService _apiService;
-    private bool _isBusy;
     private string currentSort = "";
     private int? currentGenreId = null;
     private int _currentPage = 1;
@@ -14,6 +13,7 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+        this.BindingContext = this;
         _apiService = new ApiService();
         PopularGamesList.ItemsSource = _gamesCollection;
     }
@@ -24,8 +24,8 @@ public partial class MainPage : ContentPage
     }
     private async Task LoadData(int? genreId = null, string search = null, bool isLoadMore = false)
     {
-        if (_isBusy) return;
-        _isBusy = true;
+        if (this.IsBusy) return;
+        this.IsBusy = true;
         try
         {
             if (!isLoadMore)
@@ -53,7 +53,7 @@ public partial class MainPage : ContentPage
         }
         finally
         {
-            _isBusy = false;
+            this.IsBusy = false;
             _isLoadingMore = false;
         }
     }
@@ -110,7 +110,7 @@ public partial class MainPage : ContentPage
     }
     private async void OnScrolledToBottom(object sender, EventArgs e)
     {
-        if (_isLoadingMore || _isBusy)
+        if (_isLoadingMore || this.IsBusy)
             return;
         _isLoadingMore = true;
         _currentPage++;
