@@ -61,6 +61,7 @@ public partial class MainPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is not Game selectedGame)
             return;
+
         await Navigation.PushAsync(new GameDetailsPage(selectedGame));
         ((CollectionView)sender).SelectedItem = null;
     }
@@ -101,9 +102,9 @@ public partial class MainPage : ContentPage
         {
             currentSort = selectedIndex switch
             {
-                0 => "name",       
-                1 => "-released", 
-                _ => ""           
+                0 => "name",
+                1 => "-released",
+                _ => ""
             };
             await LoadData(genreId: currentGenreId);
         }

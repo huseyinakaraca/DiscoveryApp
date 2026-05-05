@@ -5,29 +5,27 @@
              Title="Popüler Oyunlar"
              BackgroundColor="#121212">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto" 
-              Padding="0,0,10,0">
+        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
             <Label Grid.Column="0"
-               Text="Popüler Oyunlar"
-               TextColor="White"
-               FontSize="36"
-               FontAttributes="Bold"
-               VerticalOptions="Center" />
+                   Text="Popüler Oyunlar"
+                   TextColor="White"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center" />
             <Button Grid.Column="1"
-                Text="Çıkış Yap"
-                Clicked="OnLogoutClicked"
-                BackgroundColor="#E53935"
-                TextColor="White"
-                FontAttributes="Bold"
-                FontSize="20"
-                CornerRadius="10"
-                HeightRequest="0"
-                Padding="15,0"
-                VerticalOptions="Center" />
+                    Text="Çıkış Yap"
+                    Clicked="OnLogoutClicked"
+                    BackgroundColor="#E53935"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    Padding="15,0"
+                    VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
-    <Grid Padding="15"
-          RowDefinitions="Auto, Auto, *">
+    <Grid Padding="15" RowDefinitions="Auto, Auto, *">
         <SearchBar Grid.Row="0"
                    Placeholder="Oyun ara... (Örn: Cyberpunk)"
                    TextChanged="OnSearchTextChanged"
@@ -40,11 +38,8 @@
                Margin="0,0,0,10" 
                Padding="5"
                CornerRadius="10">
-            <Grid ColumnDefinitions="*, *"
-                  ColumnSpacing="10"
-                  Margin="0,0,0,10">
-                <Frame Grid.Column="0" 
-                       Padding="5">
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,0,0,10">
+                <Frame Grid.Column="0" Padding="5">
                     <Picker x:Name="CategoryPicker" 
                             Title="Kategori Seçin"
                             SelectedIndexChanged="OnCategoryChanged">
@@ -85,8 +80,7 @@
                            BorderColor="#333333" 
                            BackgroundColor="#1E1E1E" 
                            HasShadow="True">
-                        <Grid ColumnDefinitions="120, *, 40" 
-                              HeightRequest="120">
+                        <Grid ColumnDefinitions="120, *, 40" HeightRequest="120">
                             <Image Grid.Column="0" 
                                    Source="{Binding ImageUrl}" 
                                    Aspect="AspectFill" />
@@ -101,8 +95,8 @@
                                        MaxLines="1" 
                                        LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding ReleasedDate, StringFormat='Çıkış: {0}'}" 
-                                        FontSize="14" 
-                                        TextColor="#AAAAAA" />
+                                       FontSize="14" 
+                                       TextColor="#AAAAAA" />
                                 <Label Text="{Binding Rating, StringFormat='★ {0}'}" 
                                        FontSize="14" 
                                        FontAttributes="Bold" 
