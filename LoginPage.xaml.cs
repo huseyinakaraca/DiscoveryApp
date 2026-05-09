@@ -11,10 +11,10 @@ public partial class LoginPage : ContentPage
     }
     private void OnForgotPasswordClicked(object sender, EventArgs e)
     {
-        DisplayAlert("Bilgi", "Þifre sýfýrlama sayfasý daha sonra eklenecek.", "Tamam");
+        App.Current.MainPage = new ForgotPasswordPage();
     }
     private void OnSignUpClicked(object sender, EventArgs e)
     {
-        DisplayAlert("Bilgi", "Kayýt olma sayfasý daha sonra eklenecek.", "Tamam");
+        Application.Current.MainPage = new SignUpPage();
     }
 }

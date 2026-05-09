@@ -6,9 +6,12 @@
              BackgroundColor="#121212">
     <Grid RowDefinitions="Auto,*">
         <Label Text="En Yüksek Puanlı Oyunlar" 
-       FontSize="24" FontAttributes="Bold" 
-       TextColor="White" Margin="20,10" />
-        <CollectionView Grid.Row="1" x:Name="PopularGamesList"
+               FontSize="24"
+               FontAttributes="Bold" 
+               TextColor="White" 
+               Margin="20,10" />
+        <CollectionView Grid.Row="1" 
+                        x:Name="PopularGamesList"
                         SelectionMode="Single"
                         SelectionChanged="OnGameSelected">
             <CollectionView.ItemsLayout>

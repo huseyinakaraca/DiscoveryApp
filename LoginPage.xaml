@@ -4,27 +4,24 @@
              x:Class="DiscoveryApp.LoginPage"
              Title="LoginPage"
              BackgroundColor="#121212">
-
-    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-
+    <VerticalStackLayout Padding="30"
+                         Spacing="20" 
+                         VerticalOptions="Center">
         <Label Text="DiscoveryApp'e Hoş Geldin" 
                FontSize="24" 
                FontAttributes="Bold" 
                TextColor="White" 
                HorizontalOptions="Center" 
                Margin="0,0,0,30" />
-
         <Entry Placeholder="Kullanıcı Adı" 
                TextColor="White"
                PlaceholderColor="#AAAAAA"
                BackgroundColor="#1E1E1E" />
-
         <Entry Placeholder="Şifre" 
                IsPassword="True" 
                TextColor="White"
                PlaceholderColor="#AAAAAA"
                BackgroundColor="#1E1E1E" />
-
         <Button Text="Giriş Yap" 
                 BackgroundColor="#E50914" 
                 TextColor="White" 
@@ -33,27 +30,23 @@
                 HeightRequest="55" 
                 Margin="0,20,0,0"
                 Clicked="OnLoginButtonClicked" />
-
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0,15,0,0">
-
+        <HorizontalStackLayout HorizontalOptions="Center"
+                               Spacing="15"
+                               Margin="0,15,0,0">
             <Button Text="Şifremi Unuttum"
                     BackgroundColor="Transparent"
                     TextColor="#AAAAAA"
                     FontSize="14"
                     Clicked="OnForgotPasswordClicked" />
-
             <Label Text="|"
                    TextColor="#555555"
                    VerticalOptions="Center" />
-
             <Button Text="Kayıt Ol"
                     BackgroundColor="Transparent"
                     TextColor="#E50914"
                     FontSize="14"
                     FontAttributes="Bold"
                     Clicked="OnSignUpClicked" />
-
         </HorizontalStackLayout>
-
     </VerticalStackLayout>
 </ContentPage>

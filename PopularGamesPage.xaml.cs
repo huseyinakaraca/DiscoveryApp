@@ -29,7 +29,6 @@ public partial class PopularGamesPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not Game selectedGame)
             return;
         await Navigation.PushAsync(new GameDetailsPage(selectedGame));
-
         ((CollectionView)sender).SelectedItem = null;
     }
 }
