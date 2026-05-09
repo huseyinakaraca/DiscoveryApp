@@ -31,11 +31,11 @@ public partial class OnboardingPage : ContentPage
         }
         else
         {
-            Application.Current.MainPage = new AppShell();
+            Application.Current.MainPage = new LoginPage();
         }
     }
     private void OnSkipClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new AppShell();
+        Application.Current.MainPage = new LoginPage();
     }
 }
