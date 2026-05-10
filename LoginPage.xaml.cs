@@ -1,4 +1,4 @@
-namespace DiscoveryApp;
+ï»¿namespace DiscoveryApp;
 public partial class LoginPage : ContentPage
 {
     public LoginPage()
@@ -11,7 +11,7 @@ public partial class LoginPage : ContentPage
         string password = PasswordEntry.Text;
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            DisplayAlert("Hata", "Lütfen kullanýcý adý ve þifre alanlarýný boþ býrakmayýn!", "Tamam");
+            DisplayAlert("Hata", "LÃ¼tfen kullanÄ±cÄ± adÄ± ve ÅŸifre alanlarÄ±nÄ± boÅŸ bÄ±rakmayÄ±n!", "Tamam");
             return;
         }
         if (username == "Admin" && password == "Admin1234a")
@@ -20,7 +20,7 @@ public partial class LoginPage : ContentPage
         }
         else
         {
-            DisplayAlert("Hata", "Kullanýcý adý veya þifre yanlýþ!", "Tamam");
+            DisplayAlert("Hata", "KullanÄ±cÄ± adÄ± veya ÅŸifre yanlÄ±ÅŸ!", "Tamam");
         }
     }
     private void OnForgotPasswordClicked(object sender, EventArgs e)
@@ -30,5 +30,13 @@ public partial class LoginPage : ContentPage
     private void OnSignUpClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new SignUpPage();
+    }
+    private void OnPasswordPressed(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = false; 
+    }
+    private void OnPasswordReleased(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = true;  
     }
 }

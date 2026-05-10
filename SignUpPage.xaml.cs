@@ -89,4 +89,24 @@ public partial class SignUpPage : ContentPage
     {
         App.Current.MainPage = new LoginPage();
     }
+    private void OnTogglePasswordConfirmClicked(object sender, EventArgs e)
+    {
+        PasswordConfirmEntry.IsPassword = !PasswordConfirmEntry.IsPassword;
+    }
+    private void OnPasswordPressed(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = false;
+    }
+    private void OnPasswordReleased(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = true; 
+    }
+    private void OnPasswordConfirmPressed(object sender, EventArgs e)
+    {
+        PasswordConfirmEntry.IsPassword = false;
+    }
+    private void OnPasswordConfirmReleased(object sender, EventArgs e)
+    {
+        PasswordConfirmEntry.IsPassword = true;
+    }
 }
