@@ -1,26 +1,36 @@
-﻿namespace DiscoveryApp;
+﻿using DiscoveryApp.Models;
+using DiscoveryApp.Services;
+namespace DiscoveryApp;
 public partial class LoginPage : ContentPage
 {
+    private readonly DatabaseService _dbService;
     public LoginPage()
     {
         InitializeComponent();
+        _dbService = new DatabaseService();
     }
-    private void OnLoginButtonClicked(object sender, EventArgs e)
+    private async void OnLoginButtonClicked(object sender, EventArgs e)
     {
         string username = UsernameEntry.Text;
         string password = PasswordEntry.Text;
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            DisplayAlert("Hata", "Lütfen kullanıcı adı ve şifre alanlarını boş bırakmayın!", "Tamam");
+            await DisplayAlert("Hata", "Lütfen kullanıcı adı ve şifre alanlarını boş bırakmayın!", "Tamam");
             return;
         }
-        if (username == "Admin" && password == "Admin1234a")
+        var user = await _dbService.LoginUserAsync(username, password);
+
+        if (user != null)
         {
             Application.Current.MainPage = new AppShell();
         }
-        else
+        else if (username == "Admin" && password == "Admin1234a") 
         {
-            DisplayAlert("Hata", "Kullanıcı adı veya şifre yanlış!", "Tamam");
+            Application.Current.MainPage = new AppShell();
+        }
+        else 
+        {
+            await DisplayAlert("Hata", "Kullanıcı adı veya şifre yanlış!", "Tamam");
         }
     }
     private void OnForgotPasswordClicked(object sender, EventArgs e)
@@ -33,10 +43,10 @@ public partial class LoginPage : ContentPage
     }
     private void OnPasswordPressed(object sender, EventArgs e)
     {
-        PasswordEntry.IsPassword = false; 
+        PasswordEntry.IsPassword = false;
     }
     private void OnPasswordReleased(object sender, EventArgs e)
     {
-        PasswordEntry.IsPassword = true;  
+        PasswordEntry.IsPassword = true;
     }
 }

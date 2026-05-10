@@ -8,8 +8,8 @@ public class DatabaseService
     public DatabaseService()
     {
         _db = new SQLiteAsyncConnection(_dbPath);
-
         _db.CreateTableAsync<Game>().Wait();
+        _db.CreateTableAsync<User>().Wait();
     }
     public Task<int> SaveFavoriteAsync(Game game)
     {
@@ -27,5 +27,22 @@ public class DatabaseService
     {
         var game = await _db.Table<Game>().Where(x => x.Id == gameId).FirstOrDefaultAsync();
         return game != null;
+    }
+    public async Task<bool> RegisterUserAsync(User user)
+    {
+        var existingUser = await _db.Table<User>().Where(u => u.Username == user.Username).FirstOrDefaultAsync();
+        if (existingUser != null)
+        {
+            return false;
+        }
+        await _db.InsertAsync(user);
+        return true;
+    }
+    public async Task<User> LoginUserAsync(string username, string password)
+    {
+        var user = await _db.Table<User>()
+                            .Where(u => u.Username == username && u.Password == password)
+                            .FirstOrDefaultAsync();
+        return user;
     }
 }
