@@ -60,6 +60,13 @@
                     Pressed="OnPasswordConfirmPressed"
                     Released="OnPasswordConfirmReleased" />
         </Grid>
+        <Label x:Name="ErrorLabel"
+               TextColor="#E50914" 
+               IsVisible="False" 
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               FontAttributes="Bold"
+               Margin="0, 0, 0, 5" />
         <Button Text="Kayıt Ol" 
                 BackgroundColor="#E50914" 
                 TextColor="White" 

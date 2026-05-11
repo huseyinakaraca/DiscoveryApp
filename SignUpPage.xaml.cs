@@ -11,79 +11,76 @@ public partial class SignUpPage : ContentPage
     }
     private async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
+        ErrorLabel.TextColor = Color.FromArgb("#E50914");
+        ErrorLabel.IsVisible = false;
         string username = UsernameEntry.Text;
         string email = EmailEntry.Text;
         string password = PasswordEntry.Text;
         string confirmPassword = PasswordConfirmEntry.Text;
-        // Bütün Alanlar Dolu Mu
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) ||
             string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
         {
-            await DisplayAlert("Hata", "Lütfen tüm alanlarý doldurun!", "Tamam");
+            ShowErrorTemporarily("Lütfen tüm alanlarý doldurun!");
             return;
         }
-        // Kullanýcý Adý 
         if (!username.All(c => char.IsLetterOrDigit(c) || c == '_'))
         {
-            await DisplayAlert("Hata", "Kullanýcý adýnda boþluk veya özel sembol olamaz! Kelimeleri ayýrmak için sadece '_' (alt çizgi) kullanabilirsiniz (Örn: Ali_Enes).", "Tamam");
+            ShowErrorTemporarily("Kullanýcý adýnda boþluk veya özel sembol olamaz!");
             return;
         }
         if (username.Length < 3 || username.Length > 20)
         {
-            await DisplayAlert("Hata", "Kullanýcý adý en az 3, en fazla 20 karakter olmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Kullanýcý adý en az 3, en fazla 20 karakter olmalýdýr!");
             return;
         }
         if (!char.IsLetter(username[0]) || !char.IsLetter(username[1]) || !char.IsLetter(username[2]))
         {
-            await DisplayAlert("Hata", "Kullanýcý adýnýn ilk 3 karakteri sadece harflerden oluþmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Kullanýcý adýnýn ilk 3 karakteri harf olmalýdýr!");
             return;
         }
         if (!char.IsUpper(username[0]))
         {
-            await DisplayAlert("Hata", "Kullanýcý adý büyük harfle baþlamalýdýr!", "Tamam");
+            ShowErrorTemporarily("Kullanýcý adý büyük harfle baþlamalýdýr!");
             return;
         }
-        // E-Posta 
         if (email.Length < 15 || email.Length > 40)
         {
-            await DisplayAlert("Hata", "E-posta adresi en az 15, en fazla 40 karakter olmalýdýr!", "Tamam");
+            ShowErrorTemporarily("E-posta adresi 15-40 karakter arasýnda olmalýdýr!");
             return;
         }
         if (email.Contains(" "))
         {
-            await DisplayAlert("Hata", "E-posta adresinin içinde boþluk olamaz!", "Tamam");
+            ShowErrorTemporarily("E-posta adresinin içinde boþluk olamaz!");
             return;
         }
         if (!email.EndsWith("@gmail.com"))
         {
-            await DisplayAlert("Hata", "Sadece @gmail.com uzantýlý e-posta adresleri ile kayýt olabilirsiniz!", "Tamam");
+            ShowErrorTemporarily("Sadece @gmail.com adresleri kabul edilir!");
             return;
         }
-        // Þifre Doðrulamasý
         if (password.Length < 8 || password.Length > 20)
         {
-            await DisplayAlert("Hata", "Þifreniz en az 8, en fazla 20 karakter olmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Þifreniz 8-20 karakter arasýnda olmalýdýr!");
             return;
         }
         if (!password.Any(char.IsUpper))
         {
-            await DisplayAlert("Hata", "Þifrenizde en az 1 tane büyük harf bulunmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Þifrenizde en az 1 tane büyük harf bulunmalýdýr!");
             return;
         }
         if (!password.Any(char.IsLower))
         {
-            await DisplayAlert("Hata", "Þifrenizde en az 1 tane küçük harf bulunmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Þifrenizde en az 1 tane küçük harf bulunmalýdýr!");
             return;
         }
         if (!password.Any(char.IsDigit))
         {
-            await DisplayAlert("Hata", "Þifrenizde en az 1 tane rakam (sayý) bulunmalýdýr!", "Tamam");
+            ShowErrorTemporarily("Þifrenizde en az 1 tane rakam bulunmalýdýr!");
             return;
         }
-        // Þifreler Ayný Mý
         if (password != confirmPassword)
         {
-            await DisplayAlert("Hata", "Girdiðiniz þifreler birbiriyle uyuþmuyor!", "Tamam");
+            ShowErrorTemporarily("Girdiðiniz þifreler birbiriyle uyuþmuyor!");
             return;
         }
         var newUser = new User
@@ -95,12 +92,15 @@ public partial class SignUpPage : ContentPage
         bool isSuccess = await _dbService.RegisterUserAsync(newUser);
         if (isSuccess)
         {
-            await DisplayAlert("Harika!", "Hesabýn baþarýyla oluþturuldu. Þimdi giriþ yapabilirsin.", "Tamam");
+            ErrorLabel.TextColor = Color.FromArgb("#2ECC71");
+            ErrorLabel.Text = "Hesabýn baþarýyla oluþturuldu! Yönlendiriliyorsun...";
+            ErrorLabel.IsVisible = true;
+            await Task.Delay(1500);
             App.Current.MainPage = new LoginPage();
         }
         else
         {
-            await DisplayAlert("Hata", "Bu kullanýcý adý zaten alýnmýþ. Lütfen baþka bir kullanýcý adý deneyin.", "Tamam");
+            ShowErrorTemporarily("Bu kullanýcý adý zaten alýnmýþ!");
         }
     }
     private void OnBackToLoginClicked(object sender, EventArgs e)
@@ -126,5 +126,12 @@ public partial class SignUpPage : ContentPage
     private void OnPasswordConfirmReleased(object sender, EventArgs e)
     {
         PasswordConfirmEntry.IsPassword = true;
+    }
+    private async void ShowErrorTemporarily(string message)
+    {
+        ErrorLabel.Text = message;
+        ErrorLabel.IsVisible = true;
+        await Task.Delay(2000); 
+        ErrorLabel.IsVisible = false;
     }
 }

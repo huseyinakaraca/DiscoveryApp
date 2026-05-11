@@ -11,27 +11,34 @@ public partial class LoginPage : ContentPage
     }
     private async void OnLoginButtonClicked(object sender, EventArgs e)
     {
+        ErrorLabel.IsVisible = false;
         string username = UsernameEntry.Text;
         string password = PasswordEntry.Text;
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            await DisplayAlert("Hata", "Lütfen kullanıcı adı ve şifre alanlarını boş bırakmayın!", "Tamam");
+            ShowErrorTemporarily("Lütfen kullanıcı adı ve şifre alanlarını boş bırakmayın!");
             return;
         }
         var user = await _dbService.LoginUserAsync(username, password);
-
         if (user != null)
         {
             Application.Current.MainPage = new AppShell();
         }
-        else if (username == "Admin" && password == "Admin1234a") 
+        else if (username == "Admin" && password == "Admin1234a")
         {
             Application.Current.MainPage = new AppShell();
         }
-        else 
+        else
         {
-            await DisplayAlert("Hata", "Kullanıcı adı veya şifre yanlış!", "Tamam");
+            ShowErrorTemporarily("Kullanıcı adı veya şifre yanlış!");
         }
+    }
+    private async void ShowErrorTemporarily(string message)
+    {
+        ErrorLabel.Text = message;
+        ErrorLabel.IsVisible = true;
+        await Task.Delay(2000);
+        ErrorLabel.IsVisible = false;
     }
     private void OnForgotPasswordClicked(object sender, EventArgs e)
     {
