@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiscoveryApp.SettingsPage"
+             Title="Ayarlar"
+             BackgroundColor="#121212">
+    <ScrollView>
+        <VerticalStackLayout Padding="25"
+                             Spacing="25">
+            <Label Text="Hesap Ayarları" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   Margin="0,10" />
+            <Frame BackgroundColor="#1E1E1E"
+                   BorderColor="#333" 
+                   CornerRadius="15" 
+                   Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="👤" 
+                               FontSize="40" 
+                               VerticalOptions="Center"/>
+                        <VerticalStackLayout>
+                            <Label x:Name="UsernameLabel"
+                                   Text="Kullanıcı Adı"
+                                   FontSize="20"
+                                   FontAttributes="Bold" 
+                                   TextColor="White"/>
+                            <Label x:Name="EmailLabel"
+                                   Text="E-posta Adresi" 
+                                   FontSize="14"
+                                   TextColor="#AAAAAA"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <Label Text="Güvenlik" 
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#E50914"
+                   Margin="5,0,0,0"/>
+            <Frame BackgroundColor="#1E1E1E"
+                   BorderColor="#333" 
+                   CornerRadius="15" 
+                   Padding="20">
+                <VerticalStackLayout Spacing="15">
+                    <Entry x:Name="NewPasswordEntry"
+                           Placeholder="Yeni Şifre"
+                           IsPassword="True" 
+                           TextColor="White" 
+                           PlaceholderColor="#666" 
+                           BackgroundColor="#252525"/>
+                    <Button Text="Şifreyi Güncelle" 
+                            BackgroundColor="#E50914" 
+                            TextColor="White" 
+                            FontAttributes="Bold"
+                            Clicked="OnUpdatePasswordClicked" />
+                </VerticalStackLayout>
+            </Frame>
+            <Label x:Name="StatusLabel"
+                   IsVisible="False"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold" 
+                   Margin="0,10"/>
+            <Label Text="Uygulama"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#E50914"
+                   Margin="5,0,0,0"/>
+            <Frame BackgroundColor="#1E1E1E" 
+                   BorderColor="#333" 
+                   CornerRadius="15" 
+                   Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="DiscoveryApp v1.2"
+                           TextColor="White"
+                           FontAttributes="Bold"/>
+                    <Label Text="Cihazda tutulan veriler SQLite ile korunmaktadır." 
+                           TextColor="#AAAAAA"
+                           FontSize="12"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -117,4 +117,8 @@ public partial class MainPage : ContentPage
         _currentPage++;
         await LoadData(genreId: currentGenreId, isLoadMore: true);
     }
+    private async void OnSettingsClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SettingsPage());
+    }
 }

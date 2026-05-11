@@ -5,11 +5,15 @@
              Title="Popüler Oyunlar"
              BackgroundColor="#121212">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto" Padding="0,0,10,0">
+        <Grid ColumnDefinitions="*, Auto, Auto" 
+              Padding="0,0,10,0"
+              ColumnSpacing="10"
+              HorizontalOptions="Fill"
+              VerticalOptions="Center">
             <Label Grid.Column="0"
                    Text="Popüler Oyunlar"
-                   TextColor="White"
-                   FontSize="36"
+                   TextColor="#A881E6" 
+                   FontSize="28"
                    FontAttributes="Bold"
                    VerticalOptions="Center" />
             <Button Grid.Column="1"
@@ -18,14 +22,24 @@
                     BackgroundColor="#E53935"
                     TextColor="White"
                     FontAttributes="Bold"
-                    FontSize="20"
+                    FontSize="18"
                     CornerRadius="10"
-                    HeightRequest="40"
-                    Padding="15,0"
+                    HeightRequest="34"
+                    Padding="14,0"
                     VerticalOptions="Center" />
+            <Button Grid.Column="2"
+                    Text="⋮"
+                    Clicked="OnSettingsClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center"
+                    Padding="5,0" />
         </Grid>
     </Shell.TitleView>
-    <Grid Padding="15" RowDefinitions="Auto, Auto, *">
+    <Grid Padding="15"
+          RowDefinitions="Auto, Auto, *">
         <SearchBar Grid.Row="0"
                    Placeholder="Oyun ara... (Örn: Cyberpunk)"
                    TextChanged="OnSearchTextChanged"
@@ -38,8 +52,11 @@
                Margin="0,0,0,10" 
                Padding="5"
                CornerRadius="10">
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,0,0,10">
-                <Frame Grid.Column="0" Padding="5">
+            <Grid ColumnDefinitions="*, *"
+                  ColumnSpacing="10" 
+                  Margin="0,0,0,10">
+                <Frame Grid.Column="0"
+                       Padding="5">
                     <Picker x:Name="CategoryPicker" 
                             Title="Kategori Seçin"
                             SelectedIndexChanged="OnCategoryChanged">
@@ -80,7 +97,8 @@
                            BorderColor="#333333" 
                            BackgroundColor="#1E1E1E" 
                            HasShadow="True">
-                        <Grid ColumnDefinitions="120, *, 40" HeightRequest="120">
+                        <Grid ColumnDefinitions="120, *, 40" 
+                              HeightRequest="120">
                             <Image Grid.Column="0" 
                                    Source="{Binding ImageUrl}" 
                                    Aspect="AspectFill" />

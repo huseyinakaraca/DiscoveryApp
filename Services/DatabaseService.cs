@@ -5,6 +5,8 @@ public class DatabaseService
 {
     private SQLiteAsyncConnection _db;
     private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, "MyGames.db3");
+    public Task<List<User>> GetUsersAsync() => _db.Table<User>().ToListAsync();
+    public Task<int> UpdateUserAsync(User user) => _db.UpdateAsync(user);
     public DatabaseService()
     {
         _db = new SQLiteAsyncConnection(_dbPath);
